@@ -5,21 +5,22 @@ package DAO;
  */
 public class Oficina extends DAO{
 
-    private String name, direccion;
+    private int id;
+    private String nombre, direccion;
 
     public Oficina(){}
 
     public Oficina(String name, String direccion) {
-        this.name = name;
+        this.nombre = name;
         this.direccion = direccion;
     }
 
-    public String getName() {
-        return name;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getDireccion() {
@@ -28,5 +29,13 @@ public class Oficina extends DAO{
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

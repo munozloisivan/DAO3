@@ -8,16 +8,16 @@ public class App
 {
     public static void main( String[] args )
     {
-        Usuario u = new Usuario(14,"Roberto");
-        u.insert();
-        u.update();
-        u.select();
-        u.delete();
+
+        Usuario u = new Usuario("Roberto", "roberto@gmail.com", "robrobrob");
+        //u.insert();
+        u.select(5);
+        u.delete(2);
+
 
         Oficina o = new Oficina("Finanzas", "Enteça 297");
-        o.insert();
-        o.update();
-        o.select();
-        o.delete();
+        //o.insert();
+        o.select(2);
+        o.delete(1);
     }
 }

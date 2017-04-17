@@ -6,13 +6,14 @@ package DAO;
 public class Usuario extends DAO {
 
     private int id;
-    private String name;
+    private String nombre, email, password;
 
     public Usuario(){}
 
-    public Usuario(int id, String name) {
-        this.id = id;
-        this.name = name;
+    public Usuario(String nombre, String email, String password) {
+        this.nombre = nombre;
+        this.email = email;
+        this.password = password;
     }
 
     public int getId() {
@@ -23,11 +24,27 @@ public class Usuario extends DAO {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNombre(String name) {
+        this.nombre= name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

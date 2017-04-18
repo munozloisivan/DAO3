@@ -1,10 +1,15 @@
 package DAO;
 
+import Models.Oficina;
+import Models.Usuario;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -12,26 +17,9 @@ import java.util.Properties;
  */
 public abstract class DAO {
 
-    public static Connection getConnection(){
-        Connection con = null;
-        try{
-            String host = "localhost", database = "practica1";
-            int port = 3306;
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            String url = "jdbc:mysql://" + host + ":" + port + "/" + database;
-            Properties info = new Properties();
-            info.setProperty("user", "root");
-            info.setProperty("password", "mysql");
-            info.setProperty("useSSL", "false");
-            info.setProperty("serverTimezone", "UTC");
-            con = DriverManager.getConnection(url, info);
-            System.out.println("Conexión BBDD creada \n");
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        return con;
-    }
+    static DBConnection connection = new DBConnection();
+    static Connection con = connection.getCon();
+
     //Una función para coger los valores
     public String getValues(Field field) {
         String val = null;
@@ -91,7 +79,6 @@ public abstract class DAO {
         }
         sb.append(")");
 
-        Connection con = getConnection();
         try {
             PreparedStatement preparedStatement = con.prepareStatement(sb.toString());
             insertElements(preparedStatement);
@@ -119,7 +106,6 @@ public abstract class DAO {
                 sb.append(", ");
         }
         sb.append(" WHERE (conditions);");
-        System.out.println(sb);
     }
 
     public void select(int id){
@@ -131,14 +117,16 @@ public abstract class DAO {
         sb.append(this.getClass().getSimpleName());
 
         sb.append(" WHERE id = "+id);
-        System.out.println(sb);
 
-        Connection con = getConnection();
         try {
             Statement stat = con.createStatement();
             ResultSet rs = stat.executeQuery(sb.toString());
             ResultSetMetaData rsmd = rs.getMetaData();
             rs.next();
+
+            for (int i=1; i<rsmd.getColumnCount() +1; i++){
+
+            }
 
             for (int i=1; i<rsmd.getColumnCount() + 1; i++){
 
@@ -163,10 +151,9 @@ public abstract class DAO {
     public void delete(int id){
         StringBuffer sb = new StringBuffer("DELETE FROM ");
         sb.append(this.getClass().getSimpleName());
-        sb.append(" WHERE id = "+id);
+        sb.append(" WHERE id = " + id);
         System.out.println(sb);
 
-        Connection con = getConnection();
         try {
             PreparedStatement preparedStatement = con.prepareStatement(sb.toString());
             preparedStatement.execute();
@@ -178,11 +165,34 @@ public abstract class DAO {
 
     }
 
-    public void findAll(){
+    public static List<Usuario> getAllUsers() throws SQLException {
+        List<Usuario> listaUs = new ArrayList<Usuario>();
+        Statement stmt = null;
+        stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM Usuario");
+        while(rs.next()){
+            Usuario us = new Usuario();
+            us.setId(rs.getInt("id"));
+            us.setNombre(rs.getString("nombre"));
+            us.setEmail(rs.getString("email"));
+            us.setPassword(rs.getString("password"));
 
-        StringBuffer sb = new StringBuffer("SELECT * FROM ");
-        sb.append(this.getClass().getSimpleName());
-        System.out.println(sb);
+            listaUs.add(us);
+        }
+        return listaUs;
+    }
 
+    public static List<Oficina> getAllOficinas() throws SQLException {
+        List<Oficina> listaOf = new ArrayList<Oficina>();
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM Oficina");
+        while(rs.next()){
+            Oficina of = new Oficina();
+            of.setId(rs.getInt("id"));
+            of.setNombre(rs.getString("nombre"));
+            of.setDireccion(rs.getString("direccion"));
+            listaOf.add(of);
+        }
+        return listaOf;
     }
 }

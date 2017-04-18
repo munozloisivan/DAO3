@@ -1,19 +1,16 @@
-package DAO;
+package Models;
+
+import DAO.DAO;
 
 /**
  * Created by Roberto on 15/03/2017.
  */
-public class Oficina extends DAO{
+public class Oficina extends DAO {
 
     private int id;
     private String nombre, direccion;
 
     public Oficina(){}
-
-    public Oficina(String name, String direccion) {
-        this.nombre = name;
-        this.direccion = direccion;
-    }
 
     public String getNombre() {
         return nombre;

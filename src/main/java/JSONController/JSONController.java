@@ -52,7 +52,7 @@ public class JSONController extends DAO {
 
         if (validateRegister(usuario.getEmail())){
             usuario.insert();
-            String yesResult = "Usuario guardado: " + usuario.getNombre() + usuario.getId();
+            String yesResult = "Usuario guardado: " + usuario.getNombre();
             return Response.status(201).entity(yesResult).build();
         }
             String noResult = "El email ya esta registrado";

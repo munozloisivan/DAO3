@@ -27,9 +27,6 @@ public class App
 
     public static void main(String[] args) throws IOException, SQLException {
 
-        //JSONController jsonController = new JSONController();
-        //System.out.println(jsonController.getListUsuarios().get(0).getNombre()+ " " +jsonController.getListUsuarios().get(0).getId());
-
         final HttpServer server = startServer();
 
         StaticHttpHandler staticHttpHandler = new StaticHttpHandler("./public/");

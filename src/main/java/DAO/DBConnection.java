@@ -16,7 +16,7 @@ public class DBConnection {
     public DBConnection(){
         Connection con = null;
         try{
-            String host = "localhost", database = "practica1";
+            String host = "localhost", database = "dao";
             int port = 3306;
             Class.forName("com.mysql.cj.jdbc.Driver");
             String url = "jdbc:mysql://" + host + ":" + port + "/" + database;
